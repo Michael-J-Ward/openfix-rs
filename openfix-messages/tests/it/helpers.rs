@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use std::iter::FromIterator;
 
 use openfix_messages::dec_helpers::split_message_items;
+use openfix_messages::enc_helpers::FixEnvelopeBuilder;
 
 macro_rules! split_non_static {
     ($x:expr) => {{
@@ -14,6 +15,14 @@ macro_rules! split_non_static {
         );
 
         result
+    }};
+}
+
+macro_rules! build_message {
+    ($builder:expr, $content:expr) => {{
+        let mut data = Vec::new();
+        $builder.build_message(&mut data, $content).unwrap();
+        data
     }};
 }
 
@@ -64,5 +73,45 @@ fn test_split_message_items_weird_payload() {
     assert_eq!(
         split_non_static!(b"foobar"),
         HashMap::from_iter([])
+    );
+}
+
+#[test]
+fn test_add_envelope_defaults() {
+    let builder = FixEnvelopeBuilder::new();
+
+    assert_eq!(
+        build_message!(builder, b""),
+        b"8=FIX.4.4\x019=0\x0110=200\x01".to_vec()
+    );
+    assert_eq!(
+        build_message!(builder, b"5=foo\x019=bar\x01"),
+        b"8=FIX.4.4\x019=12\x015=foo\x019=bar\x0110=094\x01".to_vec()
+    );
+    assert_eq!(
+        build_message!(builder,
+            b"35=A\x0149=SERVER\x0156=CLIENT\x0134=177\x0152=20090107-18:15:16\x0198=0\x01108=30\x01"
+        ),
+        b"8=FIX.4.4\x019=65\x0135=A\x0149=SERVER\x0156=CLIENT\x0134=177\x0152=20090107-18:15:16\x0198=0\x01108=30\x0110=064\x01".to_vec()
+    );
+}
+
+#[test]
+fn test_add_envelope_with_params() {
+    let builder = FixEnvelopeBuilder::new().begin_string("FIX.4.2");
+
+    assert_eq!(
+        build_message!(builder, b""),
+        b"8=FIX.4.2\x019=0\x0110=198\x01".to_vec()
+    );
+    assert_eq!(
+        build_message!(builder, b"5=foo\x019=bar\x01"),
+        b"8=FIX.4.2\x019=12\x015=foo\x019=bar\x0110=092\x01".to_vec()
+    );
+    assert_eq!(
+        build_message!(builder,
+            b"35=A\x0149=SERVER\x0156=CLIENT\x0134=177\x0152=20090107-18:15:16\x0198=0\x01108=30\x01"
+        ),
+        b"8=FIX.4.2\x019=65\x0135=A\x0149=SERVER\x0156=CLIENT\x0134=177\x0152=20090107-18:15:16\x0198=0\x01108=30\x0110=062\x01".to_vec()
     );
 }
