@@ -94,7 +94,7 @@ impl FieldType {
             Self::String => "String",
             Self::Seqnum => "usize",
             Self::Length => "usize",
-            Self::UtcTimestamp => "f64",
+            Self::UtcTimestamp => "String",
             Self::MonthYear => "String",
             Self::DayOfMonth => "u8",
             Self::UtcDate => "chrono::NaiveDate",
