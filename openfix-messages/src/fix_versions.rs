@@ -1,4 +1,3 @@
-
 //! Supported FIX versions configurable via feature flags
 
 #[cfg(feature = "fixt11")]

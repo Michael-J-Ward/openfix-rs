@@ -1,14 +1,12 @@
-
 //! Integration tests
-//! 
+//!
 //! Placed here so that they are only compiled once
 
-use std::io::{Write, self};
+use std::io::{self, Write};
 
-use openfix_messages::{FixParseError, AsFixMessageField, FromFixMessageField};
+use openfix_messages::{AsFixMessageField, FixParseError, FromFixMessageField};
 
 use openfix_messages::split_message_items;
-
 
 #[cfg(test)]
 mod deserialize;
@@ -21,7 +19,6 @@ mod serialize_with_trailers;
 
 #[cfg(test)]
 mod helpers;
-
 
 #[derive(Debug, PartialEq)]
 struct TestStruct {
