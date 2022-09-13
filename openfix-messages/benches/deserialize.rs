@@ -4,7 +4,7 @@ extern crate test;
 
 use test::Bencher;
 
-use openfix_messages::dec_helpers::split_message_items;
+use openfix_messages::split_message_items;
 use openfix_messages::test_spec_sig::messages::*;
 use openfix_messages::FromFixMessage;
 

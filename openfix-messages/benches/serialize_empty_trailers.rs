@@ -15,7 +15,7 @@ fn build_header() -> MessageHeader {
         sender_comp_id: SenderCompID::new("BROKER".into()),
         target_comp_id: TargetCompID::new("MARKET".into()),
         msg_seq_num: MsgSeqNum::new(23593),
-        sending_time: SendingTime::new(1618082857.9780622),
+        sending_time: SendingTime::new("1618082857.9780622".into()),
         appl_ver_id: Some(ApplVerID::Fix42),
     }
 }
