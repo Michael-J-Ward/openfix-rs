@@ -3,7 +3,7 @@
 use std::collections::HashMap;
 use std::iter::FromIterator;
 
-use openfix_messages::dec_helpers::split_message_items;
+use openfix_messages::split_message_items;
 use openfix_messages::enc_helpers::FixEnvelopeBuilder;
 
 macro_rules! split_non_static {

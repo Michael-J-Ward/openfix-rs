@@ -7,7 +7,7 @@ use std::io::{Write, self};
 
 use openfix_messages::{FixParseError, AsFixMessageField, FromFixMessageField};
 
-use openfix_messages::dec_helpers::split_message_items;
+use openfix_messages::split_message_items;
 
 
 #[cfg(test)]
