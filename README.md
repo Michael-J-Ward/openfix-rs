@@ -1,3 +1,8 @@
+
+
+# TODO:
+- [ ] maybe use the `codegen` library
+
 # Rust FIX toolbox
 
 This library help to build [FIX](https://www.fixtrading.org/) aware applications using Rust.

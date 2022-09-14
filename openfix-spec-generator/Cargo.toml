@@ -11,3 +11,4 @@ quick-xml = { version = "0.21", features = [ "serialize" ] }
 anyhow = "1.0"
 convert_case = "0.4"
 syn = "1.0"
+typed-builder = "0.10"
