@@ -2,6 +2,12 @@
 
 # TODO:
 - [ ] maybe use the `codegen` library
+- [ ] or custom [proc-macro](https://github.com/dtolnay/proc-macro-workshop)
+  - I *think* we could end up with this, but perhaps this is blasphemous
+  ```rust
+   #[derive(FixTypes)]
+   include!("fix-spec.xml")
+  ```
 
 # Rust FIX toolbox
 
