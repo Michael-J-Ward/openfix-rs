@@ -59,8 +59,17 @@ pub trait AsFixMessageField {
 
 #[derive(Debug, PartialEq, Error)]
 pub enum FixParseError {
-    #[error("invalid data")]
-    InvalidData,
+    #[error("missing tag: {0}")]
+    MissingTag(u32),
+
+    #[error("invalid field")]
+    InvalidField(&'static str),
+
+    #[error("invalid group")]
+    InvalidGroup(&'static str),
+
+    #[error("invalid data: {0:?}")]
+    InvalidData(bstr::BString),
 
     #[error("invalid string")]
     InvalidString(#[from] Utf8Error),
@@ -83,7 +92,7 @@ pub trait FromFixMessageField: AsFixMessageField {
         let key_id = Self::FIX_KEY;
         let data = items
             .get(&key_id)
-            .ok_or_else(|| FixParseError::InvalidData)?;
+            .ok_or_else(|| FixParseError::MissingTag(key_id))?;
 
         Self::from_fix_value(&data)
     }

@@ -267,7 +267,7 @@ impl FromFixMessage for {cls_name} {{
 
 {group_decode}
 
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::InvalidGroup(\"{cls_name}\"))
     }}
 }}
 
@@ -660,7 +660,7 @@ impl AsFixMessageField for {field_name} {{
 impl FromFixMessageField for {field_name} {{
     fn from_fix_value(value: &[u8]) -> Result<Self, FixParseError> {{
         let value = std::str::from_utf8(value)?;
-        let value = value.parse().map_err(|_e| FixParseError::InvalidData)?;
+        let value = value.parse().map_err(|_e| FixParseError::InvalidField(\"{field_name}\"))?;
         Ok(Self {{ value }})
     }}
 }}
@@ -746,7 +746,7 @@ impl FromFixMessageField for {field_name} {{
     fn from_fix_value(value: &[u8]) -> Result<Self, FixParseError> {{
         match value {{
 {from_field_values}
-            _ => Err(FixParseError::InvalidData),
+            _ => Err(FixParseError::InvalidField(\"{field_name}\")),
         }}
     }}
 }}

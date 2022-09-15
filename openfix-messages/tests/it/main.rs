@@ -64,15 +64,15 @@ fn test_struct_encode() {
 fn test_struct_decode() {
     assert_eq!(
         TestStruct::decode_message(&split_message_items(b"foo")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestStruct::FIX_KEY))
     );
     assert_eq!(
         TestStruct::decode_message(&split_message_items(b"foo=bar")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestStruct::FIX_KEY))
     );
     assert_eq!(
         TestStruct::decode_message(&split_message_items(b"12=bar")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestStruct::FIX_KEY))
     );
     assert_eq!(
         TestStruct::decode_message(&split_message_items(b"42=foobar")),
@@ -111,7 +111,7 @@ impl FromFixMessageField for TestEnum {
         match value {
             b"opt1" => Ok(Self::Opt1),
             b"opt2" => Ok(Self::Opt2),
-            _ => Err(FixParseError::InvalidData),
+            _ => Err(FixParseError::InvalidData(bstr::BString::from(value))),
         }
     }
 }
@@ -128,15 +128,15 @@ fn test_enum_encode() {
 fn test_enum_decode() {
     assert_eq!(
         TestEnum::decode_message(&split_message_items(b"foo")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestEnum::FIX_KEY))
     );
     assert_eq!(
         TestEnum::decode_message(&split_message_items(b"foo=bar")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestEnum::FIX_KEY))
     );
     assert_eq!(
         TestEnum::decode_message(&split_message_items(b"12=bar")),
-        Err(FixParseError::InvalidData)
+        Err(FixParseError::MissingTag(TestEnum::FIX_KEY))
     );
     assert_eq!(
         TestEnum::decode_message(&split_message_items(b"29=opt1")),
