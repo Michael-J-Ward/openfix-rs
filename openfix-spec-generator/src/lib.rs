@@ -630,19 +630,17 @@ impl FieldDef {
             format!(
                 "
 #[derive(Debug, PartialEq)]
-pub struct {field_name} {{
-    pub value: {content_type}
-}}
+pub struct {field_name}(pub {content_type});
 
 impl {field_name} {{
     pub fn new(value: {content_type}) -> Self {{
-        Self {{ value }}
+        Self(value)
     }}
 }}
 
 impl fmt::Display for {field_name} {{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {{
-        write!(f, \"{field_name_upper}({{}})\", self.value)
+        write!(f, \"{field_name_upper}({{}})\", self.0)
     }}
 }}
 
@@ -653,7 +651,7 @@ impl AsFixMessageField for {field_name} {{
     where
         W: Write,
     {{
-        write!(writer, \"{{}}\", self.value)
+        write!(writer, \"{{}}\", self.0)
     }}
 }}
 
@@ -661,7 +659,7 @@ impl FromFixMessageField for {field_name} {{
     fn from_fix_value(value: &[u8]) -> Result<Self, FixParseError> {{
         let value = std::str::from_utf8(value)?;
         let value = value.parse().map_err(|_e| FixParseError::InvalidField(\"{field_name}\"))?;
-        Ok(Self {{ value }})
+        Ok(Self(value))
     }}
 }}
 
