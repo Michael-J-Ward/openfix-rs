@@ -629,7 +629,7 @@ impl FieldDef {
         if self.values.is_empty() {
             format!(
                 "
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct {field_name}(pub {content_type});
 
 impl {field_name} {{
