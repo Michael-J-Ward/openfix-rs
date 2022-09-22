@@ -238,7 +238,7 @@ impl GroupRef {
 
         format!(
             "
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum {cls_name} {{
 {group_elements}
 }}
@@ -428,7 +428,7 @@ fn spec_as_code(cls_name: &str, refs: &Vec<Reference>) -> String {
         "
 {classes}
 
-#[derive(Debug, PartialEq, typed_builder::TypedBuilder)]
+#[derive(Debug, PartialEq, Clone, typed_builder::TypedBuilder)]
 pub struct {cls_name} {{
 {fields}
 }}
@@ -543,7 +543,7 @@ impl Message {
             "
 {classes}
 
-#[derive(Debug, PartialEq, typed_builder::TypedBuilder)]
+#[derive(Debug, PartialEq, Clone, typed_builder::TypedBuilder)]
 pub struct {message_cls_name} {{
     // Common fields
     pub header: MessageHeader,
