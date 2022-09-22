@@ -710,7 +710,7 @@ impl FromFixMessageField for {field_name} {{
 
             format!(
                 "
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum {field_name} {{
 {field_names}
 }}
