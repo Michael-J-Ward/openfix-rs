@@ -19,8 +19,7 @@ pub type FixFieldItems<'a> = HashMap<u32, &'a [u8]>;
 
 const SEP_CHAR: u8 = 0x01;
 
-/// Split message items
-pub fn split_message_items<'a>(data: &'a [u8]) -> FixFieldItems<'a> {
+pub fn split_message_iter<'a>(data: &'a [u8]) -> impl Iterator<Item=(u32, &'a [u8])> {
     data.split(|x| *x == SEP_CHAR)
         .filter_map(|field| {
             let mut fields = field.splitn(2, |x| *x == '=' as u8);
@@ -33,7 +32,11 @@ pub fn split_message_items<'a>(data: &'a [u8]) -> FixFieldItems<'a> {
 
             Some((field_id, field_data))
         })
-        .collect()
+}
+
+/// Split message items
+pub fn split_message_items<'a>(data: &'a [u8]) -> FixFieldItems<'a> {
+    split_message_iter(data).collect()
 }
 
 pub trait AsFixMessageField {
