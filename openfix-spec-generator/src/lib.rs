@@ -694,6 +694,13 @@ impl FromFixMessageField for {field_name} {{
                 .collect::<Vec<_>>()
                 .join("\n");
 
+            let from_field_description = self
+                .values
+                .iter()
+                .map(|x| format!("\t\t\t\"{}\" => Ok(Self::{}),", x.description, x.as_rust_desc()))
+                .collect::<Vec<_>>()
+                .join("\n");
+
             let as_field_values = self
                 .values
                 .iter()
@@ -713,6 +720,17 @@ impl FromFixMessageField for {field_name} {{
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum {field_name} {{
 {field_names}
+}}
+
+impl std::str::FromStr for {field_name} {{
+    type Err = FixParseError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {{
+        match s {{
+            {from_field_description}
+            _ => Err(FixParseError::InvalidData(s.into()))
+        }}
+        
+    }}
 }}
 
 impl fmt::Display for {field_name} {{
