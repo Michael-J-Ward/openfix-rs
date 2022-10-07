@@ -107,6 +107,7 @@ dependencies = [
  "chrono",
  "openfix-messages",
  "openfix-spec-generator",
+ "serde",
  "thiserror",
  "typed-builder",
 ]

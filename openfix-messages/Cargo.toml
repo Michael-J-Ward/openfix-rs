@@ -9,6 +9,7 @@ bstr = "1.0.1"
 chrono = "0.4"
 thiserror = "1.0"
 typed-builder = "0.10"
+serde = "1"
 
 [build-dependencies]
 openfix-spec-generator = { path = "../openfix-spec-generator" }

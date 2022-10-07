@@ -629,7 +629,7 @@ impl FieldDef {
         if self.values.is_empty() {
             format!(
                 "
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, serde::Deserialize)]
 pub struct {field_name}(pub {content_type});
 
 impl {field_name} {{
